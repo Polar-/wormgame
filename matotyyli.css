@@ -1,0 +1,58 @@
+input:focus {
+    color: black;
+}
+html,body{
+	width:100%;
+	height:100%;
+	margin:0;
+}
+
+fieldset {
+    border: 1px solid gray;
+    height: inherit;
+    background-color: rgba(128, 128, 128, 0.3);
+    color: black;
+}
+legend {
+	color:black;
+	margin-left:9px;
+}
+span{
+	margin-left:9px;
+}
+
+#header {
+	width: 100%;
+}
+
+#left_menu {
+	width: 25%;
+    float: left;
+    height: 400px;
+}
+
+#gameboard {
+	width: 50%;
+    text-align: center;
+    float: left;
+    color: white;
+}
+
+#right_menu {
+	width: 25%;
+    float: right;
+    height: 400px;
+}
+
+#footer {
+	clear: both;
+	position:absolute;
+	bottom: 1%;
+	width: 100%;
+}
+table {
+	margin: auto;
+	width: 360px;
+	height: 360px;
+	background-color: rgba(255, 255, 255, 0.3);
+}
