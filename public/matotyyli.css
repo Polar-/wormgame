@@ -50,9 +50,32 @@ span{
 	bottom: 1%;
 	width: 100%;
 }
+
 table {
 	margin: auto;
 	width: 360px;
 	height: 360px;
 	background-color: rgba(255, 255, 255, 0.3);
 }
+
+table, td, tr{
+	
+	border: 1px solid green;
+	padding: 0px;
+	margin: auto;
+}
+
+p{
+	
+	color = black;
+}
+
+td {
+	width: 15px;
+	height : 15px;
+}
+
+td:hover {
+	background-color: pink;
+}
+
