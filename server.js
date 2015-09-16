@@ -1,17 +1,21 @@
 ///server.js
 var express = require('express');
 var app = express();
-var https = require('http').Server(app);
+var http = require('http').Server(app);
+var bcrypt = require('bcrypt');
 var register = require('./register.js');
+var bodyParser = require('body-parser');
 
 //set public environment
 app.use(express.static('public'));
 
-//GET-request for registering, responds with a success or an error message
-//TODO: POST?
-app.get('/register', function(req, res) {
-	var username = req.query.username;
-	var password = req.query.password;
+//set body parsing (for post request.body)
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//POST-request for registering, responds with a success or an error message
+app.post('/register', function(req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
 	register.RegisterPlayer(username, password, function(err) {
 		if (err) {
 			res.send(err.toString());
@@ -21,6 +25,7 @@ app.get('/register', function(req, res) {
 	});
 });
 
-https.listen(3000, function() {
+//Listen on port..
+http.listen(3000, function() {
   console.log('listening on port 3000');
 });
