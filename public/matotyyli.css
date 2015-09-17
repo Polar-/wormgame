@@ -32,10 +32,10 @@ span{
 }
 
 #gameboard {
-	width: 50%;
+    width: 50%;
     text-align: center;
     float: left;
-    color: white;
+    color: black;
 }
 
 #right_menu {
