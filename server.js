@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var bcrypt = require('bcrypt');
-var register = require('./register.js');
+var auth = require('./auth.js');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(http);
 
@@ -17,18 +17,41 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/register', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
-	register.RegisterPlayer(username, password, function(err) {
+	auth.Register(username, password, function(err) {
 		if (err) {
-			res.send(err.toString());
+			res.send(err);
 		} else {
 			res.send('Your account has been successfully registered.');
 		};
 	});
 });
 
-//Listen on port..
-http.listen(3000, function() {
-  console.log('listening on port 3000');
+//POST-request for logging in, responds with a success or an error message
+app.post('/login', function(req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
+	auth.Login(username, password, function(err, sessionID) {
+		var data = { err: err, sessionID: sessionID };
+		if (err) {
+			res.send(data);
+		} else {
+			console.log('Logged in player ' + username);
+			res.send(data);
+		};
+	});
+});
+
+app.post('/login/checksession', function(req, res) {
+	var sessionID = req.body.sessionID;
+	auth.CheckSession(sessionID, function(err, success, username) {
+		data = { err: err, username: username };
+		if (!success) {
+			res.send(data);
+		} else {
+			console.log('Logged in player ' + username + ' using sessionID.');
+			res.send(data);
+		};
+	});
 });
 
 //Talk with player
@@ -49,4 +72,9 @@ io.on('connection', function(socket){
  		var data = "TEST RANK 1</br>TEST RANK 2</br>TEST RANK 3</br>";
     	socket.emit('getRanking',data);
   	});
+});
+
+//Listen on port..
+http.listen(3000, function() {
+  console.log('listening on port 3000');
 });

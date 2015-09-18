@@ -2,9 +2,9 @@ CREATE DATABASE worm;
 USE worm;
 
 CREATE TABLE player (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-	username VARCHAR(20),
-	password VARCHAR(500)
+	username VARCHAR(20) PRIMARY KEY,
+	password VARCHAR(500),
+	session VARCHAR(30)
 )ENGINE=InnoDB;
 
 CREATE TABLE score (
