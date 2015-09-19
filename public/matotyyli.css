@@ -1,6 +1,6 @@
-*{
+/**{
 	border: solid black 1px;
-}
+}*/
 
 input:focus {
     color: black;
