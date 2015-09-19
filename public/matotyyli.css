@@ -1,15 +1,19 @@
+*{
+	border: solid black 1px;
+}
+
 input:focus {
     color: black;
 }
 html,body{
-	width:100%;
-	height:100%;
+	width:99%;
+	height:99%;
 	margin:0;
 }
 
 fieldset {
     border: 1px solid gray;
-    height: inherit;
+    height: 95%; /*edellisessä ratkaisussa vuotivat yli*/
     background-color: rgba(128, 128, 128, 0.3);
     color: black;
 }
@@ -23,32 +27,43 @@ span{
 
 #header {
 	width: 100%;
+	
 }
 
 #left_menu {
-	width: 25%;
+	width: 22%;
     float: left;
-    height: 400px;
+    height: 450px; /*prosenteiksi?*/
 }
-
-#gameboard {
-    width: 50%;
-    text-align: center;
+#middle {
+	width: 55%;
+	height: 90%;
+	text-align: left;
     float: left;
+}
+#gameboardarea { /*edellinen nimeämiskäytäntö loi conflictin js llä luodun pelipöydän kanssa*/
+    
+    height: 100%;
+    text-align: center;
+    float: middle;
     color: black;
 }
-
+#gameboard {
+	float:middle;
+	width: 500px;
+	height: 500px;
+}
 #right_menu {
-	width: 25%;
+	width: 22%;
     float: right;
-    height: 400px;
+    height: 450px; /*prosenteiksi?*/
 }
 
 #footer {
 	clear: both;
 	position:absolute;
 	bottom: 1%;
-	width: 100%;
+	width: 98%;
 }
 
 table {

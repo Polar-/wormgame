@@ -137,7 +137,7 @@ function initGameboard(){
 	gameboard += '<p style="text-align color: black: center"> Contros: arrow keys, wasd. Space to reset. M for multiplayer</p>'
 	gameboard += '</table>';
 	
-	document.getElementById('gameboard').innerHTML = gameboard;
+	document.getElementById('gameboardarea').innerHTML = gameboard; /*nimeämistä muokattu muotoilun vuoksi*/
 }
 
 function addFood(){
