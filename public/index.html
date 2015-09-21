@@ -22,6 +22,10 @@
                     document.getElementById('ranking').innerHTML = data;
                 });
 
+                socket.on('chat', function(data){
+                    document.getElementById('chat_test').innerHTML = data;
+                });
+
                 // This function fetches player names
                 function loadPlayers(){
                     socket.emit('getPlayers');
@@ -30,6 +34,13 @@
                 // This function fetches the rankings
                 function loadRanking(){
                     socket.emit('getRanking');
+                }
+                // Used for chat functionality
+                function Chat(){
+                    data = CheckSession();
+                    data = data + ": "+document.getElementById('chat_message').value;
+                    socket.emit('chat', data);
+                    document.getElementById('chat_message').value = "";
                 }
             </script>
 
@@ -72,8 +83,9 @@
 
                 <div id="footer">
                     <fieldset><legend><strong>Messages</strong></legend>
+                    <p id="chat_test"><span></span></p>
                     </br></br></br>
-                    <p><strong><span>Send:</span></strong> <input type="text"></p>
+                    <input type="submit" onclick="Chat()" value="Send"><input id="chat_message" type="text">
                     </fieldset> 
                 </div>
             </div>
