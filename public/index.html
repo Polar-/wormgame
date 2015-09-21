@@ -37,15 +37,17 @@
             <title>Game of Worms</title>
         </head>
 		
-        <body onload="initGame(),loadPlayers(),loadRanking()">
+        <body onload="initGame(),loadPlayers(),loadRanking(),init()">
 
             <div id="global">             
                 <div id="header">
                      <fieldset><legend><strong>Login</strong></legend>
-                        <span>Username:</span> <input id="username_text" type="text">
-                        <span>Password:</span> <input id="password_text" type="password">
-                        <input type="submit" onclick="Login()" value="Login">
-                        <input type="submit" onclick="Register()" value="Register">
+                        <p id="loginInfo" class="logout"></p>
+                        <input type="submit" class="logout" onclick="Logout()" value="Logout">
+                        <span class="login">Username:</span> <input id="username_text" class="login" type="text">
+                        <span class="login">Password:</span> <input id="password_text" class="login" type="password">
+                        <input type="submit" class="login" onclick="Login()" value="Login">
+                        <input type="submit" class="login" onclick="Register()" value="Register">
                      </fieldset>
                 </div>
 
