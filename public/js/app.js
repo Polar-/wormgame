@@ -1,7 +1,8 @@
 //Function for initialization, loaded on body-onload
 function init() {
-	InitLoginUI();
-	CheckSession();
+	CheckSession(function(username) {
+		InitLoginUI(username);	
+	});
 };
 
 //Register-function
@@ -48,14 +49,13 @@ function Logout() {
 };
 
 //Checks if current sessionID matches server sessionID
-function CheckSession() {
+function CheckSession(callback) {
 	var sessionID = GetCookie("sessionID");
 	var data = { sessionID: sessionID };
 	$.post("/login/checksession", data, function(res) { 
 		if (!res.err)
 		{
-			InitLogoutUI(res.username);
-			return res.username;
+			return callback(res.username);
 		};
 	});
 };
