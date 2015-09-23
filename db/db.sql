@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS worm;
 CREATE DATABASE worm;
 USE worm;
 
