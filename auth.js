@@ -4,7 +4,6 @@
 var bcrypt = require('bcrypt');
 var db = require('./db.js');
 var express = require('express');
-var app = express();
 var router = express.Router();
 
 //POST-request for registering, responds with a success or an error message
