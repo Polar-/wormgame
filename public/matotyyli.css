@@ -64,6 +64,13 @@ span{
 	position:absolute;
 	bottom: 1%;
 	width: 98%;
+	height: 20%;
+}
+
+#chat_test{
+	height:60%;
+	background-color: white;
+	overflow: scroll;
 }
 
 table {
