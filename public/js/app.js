@@ -1,9 +1,9 @@
 //Function for initialization, loaded on body-onload
 function init() {
+	//Check if user is logged in using sessionID
 	CheckSession(function(username) {
-		console.log(username);
+		//Change UI if logged in
 		if (username) {
-			console.log(username);
 			InitLogoutUI(username);	
 		} else {
 			InitLoginUI();
@@ -11,7 +11,14 @@ function init() {
 	});
 };
 
-//Register-function
+function SendScore(username, score) {
+	//Create data object and send it to server
+	var data = { username: username, score: score };
+	$.post("/scores/newscore", data, function() { 
+		//UpdateScores();    // TODO : FUNCTION FOR UPDATING HIGHSCORES
+	});
+};
+
 function Register() {
 	var username = $("#username_text").val();
 	var password = $("#password_text").val();
@@ -23,12 +30,11 @@ function Register() {
 
 	//Create data-object for user credentials
 	var data = { username: username, password: pw_hash };
-	$.post("/register", data, function(res) {
+	$.post("auth/register", data, function(res) {
 		alert(res);
 	});
 };
 
-//Register-function
 function Login() {
 	var username = $("#username_text").val();
 	var password = $("#password_text").val();
@@ -38,7 +44,7 @@ function Login() {
 
 	//Create data-object for user credentials
 	var data = { username: username, password: pw_hash };
-	$.post("/login", data, function(res) {
+	$.post("auth/login", data, function(res) {
 		if (res.err) {
 			alert(res.err);
 		} else {
@@ -58,7 +64,7 @@ function Logout() {
 function CheckSession(callback) {
 	var sessionID = GetCookie("sessionID");
 	var data = { sessionID: sessionID };
-	$.post("/login/checksession", data, function(res) { 
+	$.post("auth/checksession", data, function(res) { 
 		return callback(res.username);
 	});
 };

@@ -107,7 +107,6 @@ function checkKey(e) {
 
 
 function initGame() {
-	
 	initGameboard()
 	player = new worm(5, 61, "green", "player1");
 	// player.update = setInterval(function(){player.drawWorm();}, 150);

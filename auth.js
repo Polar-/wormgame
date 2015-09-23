@@ -1,18 +1,56 @@
-///auth.js
+///auth.js - Authentication module
+//Handles registering, logging in and checking sessionID's
 
 var bcrypt = require('bcrypt');
-var mysql = require('mysql');
+var db = require('./db.js');
+var express = require('express');
+var app = express();
+var router = express.Router();
 
-//Init MySQL-connection -info
-var connection = mysql.createConnection({
-	host     : 'localhost',
-	user     : 'root',
-	password : 'karhu',
-	database : 'worm'
+//POST-request for registering, responds with a success or an error message
+router.post('/register', function(req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
+	Register(username, password, function(err) {
+		if (err) {
+			res.send(err);
+		} else {
+			res.send('Your account has been successfully registered.');
+		};
+	});
+});
+
+//POST-request for logging in, responds with a success or an error message
+router.post('/login', function(req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
+	Login(username, password, function(err, sessionID) {
+		var data = { err: err, sessionID: sessionID };
+		if (err) {
+			res.send(data);
+		} else {
+			console.log('Logged in player ' + username);
+			res.send(data);
+		};
+	});
+});
+
+//POST-request for checking sessionID, responds with username if found
+router.post('/checksession', function(req, res) {
+	var sessionID = req.body.sessionID;
+	CheckSession(sessionID, function(err, success, username) {
+		data = { err: err, username: username };
+		if (!success) {
+			res.send(data);
+		} else {
+			console.log('Logged in player ' + username + ' using sessionID.');
+			res.send(data);
+		};
+	});
 });
 
 //Adds player to database
-exports.Register = function(username, password, callback) {
+function Register(username, password, callback) {
 	CheckIfExists(username, function(err) {
 		if (err) {
 			console.log('ERROR: ' + err);
@@ -25,7 +63,7 @@ exports.Register = function(username, password, callback) {
 				return callback(err);
 			};
 			//Insert username and password-hash into database
-			connection.query('INSERT INTO player(username, password) VALUES("' + username + '", "' + hash + '");', function(err) {
+			db.Query('INSERT INTO player(username, password) VALUES("' + username + '", "' + hash + '");', function(err) {
 				if (err) {
 					err = 'Database error.';
 				};
@@ -36,7 +74,7 @@ exports.Register = function(username, password, callback) {
 };
 
 //Login player using username and password
-exports.Login = function(username, password, callback) {
+function Login(username, password, callback) {
 	console.log('Logging in player ' + username + '...');
 	GetAllPlayers(function(err, players) {
 		if (err) {
@@ -55,7 +93,11 @@ exports.Login = function(username, password, callback) {
 					} else {
 						//Create random sessionID
 						var sessionID = CreateSessionID(20);
-						connection.query('UPDATE player SET session = "' + sessionID + '" WHERE username = "' + username + '";');
+						db.Query('UPDATE player SET session = "' + sessionID + '" WHERE username = "' + username + '";', function(err) {
+							if (err) {
+								console.log(err);
+							};
+						});
 					};
 					return callback(err, sessionID);
 				});
@@ -70,7 +112,7 @@ exports.Login = function(username, password, callback) {
 	});
 };
 
-exports.CheckSession = function(sessionID, callback) {
+function CheckSession(sessionID, callback) {
 	console.log('Checking session ID ' +  sessionID + '...');
 	//Get all players from db
 	GetAllPlayers(function(err, players) {
@@ -111,8 +153,9 @@ function CheckIfExists(username, callback) {
 
 //Gets all players from database
 function GetAllPlayers(callback) {
-	connection.query('SELECT * FROM player;', function(err, rows) {
+	db.Query('SELECT * FROM player;', function(err, rows) {
 		if (err) {
+			console.log(err);
 			err = 'Error database connection failed.';
 		};
 		return callback(err, rows);
@@ -141,3 +184,6 @@ function CreateSessionID(length) {
 	console.log('Created sessionID: ' + rstring);
 	return rstring;
 };
+
+//Export module as router
+module.exports = router;
