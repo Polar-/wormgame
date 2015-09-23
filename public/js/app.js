@@ -1,7 +1,13 @@
 //Function for initialization, loaded on body-onload
 function init() {
 	CheckSession(function(username) {
-		InitLoginUI(username);	
+		console.log(username);
+		if (username) {
+			console.log(username);
+			InitLogoutUI(username);	
+		} else {
+			InitLoginUI();
+		};
 	});
 };
 
@@ -53,10 +59,7 @@ function CheckSession(callback) {
 	var sessionID = GetCookie("sessionID");
 	var data = { sessionID: sessionID };
 	$.post("/login/checksession", data, function(res) { 
-		if (!res.err)
-		{
-			return callback(res.username);
-		};
+		return callback(res.username);
 	});
 };
 
