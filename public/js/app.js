@@ -14,9 +14,16 @@ function init() {
 function SendScore(username, score) {
 	//Create data object and send it to server
 	var data = { username: username, score: score };
-	$.post("/scores/newscore", data, function() { 
-		//UpdateScores();    // TODO : FUNCTION FOR UPDATING HIGHSCORES
+	$.post("/scores/addScore", data, function() {
+		if (err) {
+			alert("ERROR: Could not send score.");
+		};
+		UpdateScores();
 	});
+};
+
+function UpdateScores() {
+    // TODO : FUNCTION FOR UPDATING HIGHSCORES TO UI
 };
 
 function Register() {

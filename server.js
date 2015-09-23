@@ -3,9 +3,10 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var bcrypt = require('bcrypt');
-var auth = require('./auth.js');
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
+var auth = require('./auth.js');
+var score = require('./score.js');
 
 //set body parsing (for post request.body)
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,8 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //set public environment
 app.use(express.static('public'));
 
-//set authentication module route
+//set module-routes
 app.use('/auth', auth);
+app.use('/score', score);
 
 
 //Talk with player
@@ -44,6 +46,9 @@ io.on('connection', function(socket){
 
 });
 
+//
+//PLACEHOLDER -- MOVE TO SCORE.JS?
+//
 //Make a data-package out of an array containing rankings / online players
 var players = ["Hatti","Vatti"];
 var highscore_players = ["Matti", "Katti", "Ratti", "Vatti", "Patti"];

@@ -7,9 +7,9 @@ var router = express.Router();
 
 //POST-request for registering, responds with a success or an error message
 router.post('/addScore', function(req, res) {
-	var player = req.body.player;
+	var username = req.body.username;
 	var score = req.body.score;
-	db.Query('INSERT INTO score(player, score) VALUES("' + player + '", "' + score + '");', function(err) {
+	db.Query('INSERT INTO score(player, score) VALUES("' + username + '", "' + score + '");', function(err) {
 		if (err) console.log(err);
 		res.send(err);
 	});
