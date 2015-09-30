@@ -266,6 +266,9 @@ worm.prototype.drawWorm = function() {
 	{
 		if (nextPosition == this.position[i])
 		{
+			//Add score to database
+			SendScore(this.score);
+
 			console.log("dead")
 			alert("Game Over. Press Space to reset")
 			dead = true;
