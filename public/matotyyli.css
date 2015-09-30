@@ -5,6 +5,7 @@
 input:focus {
     color: black;
 }
+
 html,body{
 	width:99%;
 	height:99%;
@@ -17,10 +18,12 @@ fieldset {
     background-color: rgba(128, 128, 128, 0.3);
     color: black;
 }
+
 legend {
 	color:black;
 	margin-left:9px;
 }
+
 span{
 	margin-left:9px;
 }
@@ -35,24 +38,27 @@ span{
     float: left;
     height: 450px; /*prosenteiksi?*/
 }
+
 #middle {
 	width: 55%;
 	height: 90%;
 	text-align: left;
     float: left;
 }
-#gameboardarea { /*edellinen nimeämiskäytäntö loi conflictin js llä luodun pelipöydän kanssa*/
-    
+
+#gameboardarea { /*edellinen nimeämiskäytäntö loi conflictin js llä luodun pelipöydän kanssa*/ 
     height: 100%;
     text-align: center;
     float: middle;
     color: black;
 }
+
 #gameboard {
-	float:middle;
+	float: middle;
 	width: 500px;
 	height: 500px;
 }
+
 #right_menu {
 	width: 22%;
     float: right;
@@ -61,16 +67,25 @@ span{
 
 #footer {
 	clear: both;
-	position:absolute;
+	position: absolute;
 	bottom: 1%;
 	width: 98%;
 	height: 20%;
 }
 
-#chat_test{
-	height:60%;
-	background-color: white;
-	overflow: scroll;
+#chat_test {
+	height: 60%;
+	width: 100%;
+	background-color: #DDDDDD;
+	overflow: auto;
+}
+
+#chat_message {
+	width: 89%;
+}
+
+#chat_send {
+	width: 10%;
 }
 
 table {
@@ -87,8 +102,7 @@ table, td, tr{
 	margin: auto;
 }
 
-p{
-	
+p {
 	color = black;
 }
 
