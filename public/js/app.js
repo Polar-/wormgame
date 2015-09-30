@@ -9,6 +9,22 @@ function init() {
 			InitLoginUI();
 		};
 	});
+
+	//Event listeners for enter-keypress
+	$(".login").keyup(function(e) {
+		console.log("keypress");
+		if (e.keyCode == 13) {
+			Login();
+		};
+	});
+	$("#chat_message").keyup(function(e) {
+		if (e.keyCode == 13) {
+			Chat();
+		};
+		console.log("keypress");
+	});
+
+	$("#chat_test").html("");
 };
 
 function SendScore(score) {

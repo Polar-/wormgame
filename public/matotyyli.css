@@ -78,6 +78,8 @@ span{
 	width: 100%;
 	background-color: #DDDDDD;
 	overflow: auto;
+	font-weight: bold;
+	font-family: "Arial", serif;
 }
 
 #chat_message {

@@ -40,11 +40,18 @@
 
                 // Used for chat functionality
                 function Chat(){
-                    CheckSession(function(username) {
-                      data = username + ": "+document.getElementById('chat_message').value;
-                      socket.emit('chat', data);
-                      document.getElementById('chat_message').value = "";
-                    });
+                    //If messagebox is not empty
+                    if (document.getElementById('chat_message').value != "") {
+                        CheckSession(function(username) {
+                            if (username) {
+                                data = username + ": " + document.getElementById('chat_message').value;
+                                socket.emit('chat', data);
+                                document.getElementById('chat_message').value = "";
+                            } else {
+                                alert('Please log in first.');
+                            };
+                        });
+                    };
                 };
             </script>
 
