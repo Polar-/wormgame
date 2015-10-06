@@ -133,7 +133,7 @@ function initGameboard(){
 		gameboard += '</tr>';
 	}
 	
-	gameboard += '<p style="text-align color: black: center"> Contros: arrow keys, wasd. Space to reset. M for multiplayer</p>'
+	gameboard += '<p style="text-align color: black: center"> Controls: arrow keys, wasd. Space to reset. M for multiplayer</p>'
 	gameboard += '</table>';
 	
 	document.getElementById('gameboardarea').innerHTML = gameboard; /*nimeämistä muokattu muotoilun vuoksi*/

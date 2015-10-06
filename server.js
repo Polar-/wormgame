@@ -18,57 +18,58 @@ app.use(express.static('public'));
 app.use('/auth', auth);
 app.use('/score', score);
 
+//Socket-list for online players
+var oPlayers = [];
 
-//Talk with player
-io.on('connection', function(socket){
 
- 	console.log("New player connected.");
+io.on('connect', function(socket) {
 
- 	//Send player a package containing online player names
- 	socket.on('getPlayers', function(){
- 		console.log("sending players");
- 		var data = GetPlayerList();
-    	socket.emit('getPlayers',data);
-  	});
+ 	io.emit('updateOnline', oPlayers);
+
+	socket.on('disconnect', function() {
+		RemovePlayer(socket);
+	});
+
+	//Used when player willingly logs out
+	socket.on('removePlayer', function() {
+		RemovePlayer(socket);
+	});
+
+ 	socket.on('addPlayer', function(username) {
+ 		//Check if player is already listed
+ 		var i = oPlayers.indexOf(username);
+	 	if (i == -1) {
+	 		socket.id = username;
+	 		oPlayers.push(socket.id);
+
+	 		//Broadcast update event
+	 		io.emit('updateOnline', oPlayers);
+	 	};
+ 	});
 
  	//Send player a package containing the rankings
- 	socket.on('getRanking', function(){
- 		console.log("sending ranking");
- 		var data = GetRankingList();
-    	socket.emit('getRanking',data);
-  	});
+ 	//socket.on('getRanking', function(){
+ 	//	var data = GetRankingList();
+    //	socket.emit('getRanking',data);
+  	//});
 
  	 socket.on('chat', function(data){
-    	socket.broadcast.emit('chat', data);
-    	socket.emit('chat',data);
-    	console.log(data);
+ 	 	//Send message to all connected sockets
+    	io.emit('chat', data);
   	});
 
 });
 
-//
-//PLACEHOLDER -- MOVE TO SCORE.JS?
-//
-//Make a data-package out of an array containing rankings / online players
-var players = ["Hatti","Vatti"];
-var highscore_players = ["Matti", "Katti", "Ratti", "Vatti", "Patti"];
-var highscore_scores = ["9001", "8000", "6999", "5300", "4970"];
+function RemovePlayer(socket) {
+	//Check if player already exists
+	var i = oPlayers.indexOf(socket.id);
 
-function GetPlayerList(){
-	var data = "";
-	for (var i=0; i < players.length; i++){
-		data = data + players[i] + "</br>";
-	}	 
-	return data;
-}
-
-function GetRankingList(){
-	var data = "";
-	for (var i=0; i < highscore_players.length; i++){
-		data = data + highscore_players[i] + ": " + highscore_scores[i]+"</br>";
-	}	 
-	return data;
-}
+	//Remove player from online players
+	if (i != -1) {
+		oPlayers.splice(i, 1);
+	};
+ 	io.emit('updateOnline', oPlayers);
+};
 
 //Listen on port..
 http.listen(3000, function() {

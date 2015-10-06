@@ -4,7 +4,8 @@ function init() {
 	CheckSession(function(username) {
 		//Change UI if logged in
 		if (username) {
-			InitLogoutUI(username);	
+			InitLogoutUI(username);
+			SetOnline(username);
 		} else {
 			InitLoginUI();
 		};
@@ -12,7 +13,6 @@ function init() {
 
 	//Event listeners for enter-keypress
 	$(".login").keyup(function(e) {
-		console.log("keypress");
 		if (e.keyCode == 13) {
 			Login();
 		};
@@ -77,6 +77,7 @@ function Login() {
 			alert(res.err);
 		} else {
 			InitLogoutUI(username);
+			SetOnline(username);
 			document.cookie = "sessionID=" + res.sessionID;
 		};
 	});
@@ -84,6 +85,7 @@ function Login() {
 
 //Removes sessionID-cookie
 function Logout() {
+	socket.emit('removePlayer');
 	document.cookie = "sessionID=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
 	InitLoginUI();
 };
