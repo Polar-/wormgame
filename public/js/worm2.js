@@ -268,6 +268,7 @@ worm.prototype.drawWorm = function() {
 		{
 			//Add score to database
 			SendScore(this.score);
+			UpdateScores();
 
 			console.log("dead")
 			alert("Game Over. Press Space to reset")

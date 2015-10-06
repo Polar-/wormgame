@@ -17,10 +17,13 @@ router.post('/addScore', function(req, res) {
 
 //POST-request for logging in, responds with a success or an error message
 router.post('/getAllScores', function(req, res) {
-	//TODO: GET SCORES FROM DATABASE
-	//db.Query(query, function(data) {
-		//res.send(data);
-	//});
+	//Get top 30 scores in descending order from database
+	var query = 'SELECT player, score FROM score ORDER BY score DESC, time ASC LIMIT 30;'
+	db.Query(query, function(err, rows) {
+		var data = { err: err, rows: rows };
+		if (err) console.log(err);
+		res.send(data);
+	});
 });
 
 //Export module as router

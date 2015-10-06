@@ -5,6 +5,7 @@ function init() {
 		//Change UI if logged in
 		if (username) {
 			InitLogoutUI(username);
+			//Set online status for online players if player is logged in
 			SetOnline(username);
 		} else {
 			InitLoginUI();
@@ -24,6 +25,10 @@ function init() {
 		console.log("keypress");
 	});
 
+	//Update player scores
+	UpdateScores();
+
+	//Fixes a bug where the chat has a space by default
 	$("#chat_test").html("");
 };
 
@@ -34,9 +39,6 @@ function SendScore(score) {
 			//Create data object and send it to server
 			var data = { username: username, score: score };
 			$.post("/score/addScore", data, function() {
-				if (err) {
-					alert("ERROR: Could not send score.");
-				};
 				UpdateScores();
 			});
 		};
@@ -44,7 +46,20 @@ function SendScore(score) {
 };
 
 function UpdateScores() {
-    // TODO : FUNCTION FOR UPDATING HIGHSCORES TO UI
+    //Get scores from server
+    $.post("/score/getAllScores", function(res) {
+    	if (!res.err) {
+    		//Clear highscores
+	    	$("#ranking").html("");
+
+	    	//Generate string for highscores
+	    	var string = "";
+	    	for (var i = 0; i < res.rows.length; i++) {
+	    		string += i + 1 + ". " + res.rows[i].player + " " + res.rows[i].score + "</br>";
+	    	};
+	    	$("#ranking").html(string);
+    	};
+    });
 };
 
 function Register() {

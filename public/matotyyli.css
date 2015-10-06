@@ -21,11 +21,11 @@ fieldset {
 
 legend {
 	color:black;
-	margin-left:9px;
+	margin-left: 9px;
 }
 
 span{
-	margin-left:9px;
+	margin-left: 9px;
 }
 
 #header {
@@ -36,7 +36,8 @@ span{
 #left_menu {
 	width: 22%;
     float: left;
-    height: 450px; /*prosenteiksi?*/
+    height: 100%; /*prosenteiksi?*/
+    font-weight: bold;
 }
 
 #middle {
@@ -62,7 +63,7 @@ span{
 #right_menu {
 	width: 22%;
     float: right;
-    height: 450px; /*prosenteiksi?*/
+    height: 100%; /*prosenteiksi?*/
 }
 
 #footer {
@@ -80,6 +81,13 @@ span{
 	overflow: auto;
 	font-weight: bold;
 	font-family: "Arial", serif;
+}
+
+#ranking {
+	height: 100%;
+	overflow: hidden;
+	overflow-x: hidden;
+	font-weight: bold;
 }
 
 #chat_message {
