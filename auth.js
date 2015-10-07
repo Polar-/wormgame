@@ -116,7 +116,7 @@ function CheckSession(sessionID, callback) {
 	//Get all players from db
 	GetAllPlayers(function(err, players) {
 		if (err) {
-			return callback(err, false, username);
+			return callback(err, false);
 		};
 		var found = false;
 		for (var i = 0; i < players.length; i++) {
