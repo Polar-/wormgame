@@ -72,6 +72,4 @@ function RemovePlayer(socket) {
 };
 
 //Listen on port..
-http.listen(3000, function() {
-  console.log('listening on port 3000');
-});
+http.listen(process.env.OPENSHIFT_NODEJS_PORT, process.env.OPENSHIFT_NODEJS_IP);
